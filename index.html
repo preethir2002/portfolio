@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preethi's Portfolio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: black;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            position: relative;
+            height: 100vh;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        header img {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .intro {
+            margin-top: 50px;
+            font-size: 2em;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 4s forwards;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin: 0;
+            opacity: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid orange;
+            animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink-caret {
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: orange;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .theme-switch-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1;
+        }
+
+        .theme-slider {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .theme-slider input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .round {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background-color: #ccc;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .round::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        input:checked + .round {
+            background-color: orange;
+        }
+
+        input:checked + .round::before {
+            transform: translateX(25px);
+        }
+
+        .theme-switch-container p {
+            margin: 0;
+            font-size: 1em;
+            color: white;
+        }
+
+        .download-button {
+            display: inline-block;
+            background-color: #1E252B;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s;
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+        }
+
+        .download-button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .download-button:hover {
+            background-color: darkorange;
+            transform: scale(1.05);
+        }
+
+        .skills,
+        .projects {
+            padding: 40px;
+            text-align: center;
+            background-color: #1e1e1e;
+        }
+
+        .skills h2,
+        .projects h2 {
+            font-size: 2.5em;
+            color: orange;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .skill {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            width: 150px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(255, 165, 0, 0.5);
+        }
+
+        .skill img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .project {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, color 0.3s;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project img {
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+            transition: opacity 0.3s, transform 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project:hover img {
+            opacity: 0.8;
+            transform: translateX(20px);
+        }
+
+        .project-content {
+            width: 60%;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .project-content:hover {
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+            color: orange;
+        }
+
+        .project-content:hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            z-index: -1;
+            transition: opacity 0.3s;
+        }
+
+        .project a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .dark-mode {
+            background-color: white;
+            color: black;
+        }
+
+        .dark-mode header h1 {
+            color: black;
+        }
+
+        .dark-mode .theme-switch-container p {
+            color: black;
+        }
+
+        .dark-mode .round {
+            background-color: #333;
+        }
+
+        .dark-mode .theme-switch-container {
+            top: 20px;
+            right: 20px;
+            gap: 10px;
+        }
+
+        .dark-mode footer {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .dark-mode .skills {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .dark-mode .skill {
+            background-color: white;
+            color: black;
+        }
+
+        .dark-mode .skills h2 {
+            color: #333;
+        }
+
+        .contact {
+            padding: 40px;
+            text-align: center;
+            background-color: #1e1e1e;
+        }
+
+        .contact h2 {
+            font-size: 2.5em;
+            color: orange;
+        }
+
+        .contact-item {
+            margin-bottom: 20px;
+        }
+
+        .contact-item label {
+            font-weight: bold;
+        }
+
+        .contact-item p {
+            margin: 0;
+        }
+
+        .resume-slider {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .resume-slider h2 {
+            font-size: 2.5em;
+            color: rgb(19, 18, 18);
+        }
+
+        .resume-slider a {
+            font-size: 1.5em;
+            color: rgb(18, 18, 17);
+            text-decoration: none;
+            border: 2px solid rgb(236, 234, 229);
+            padding: 10px 20px;
+            border-radius: 0px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .resume-slider a:hover {
+            background-color: rgb(15, 15, 15);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="IMG1.jpg" alt="Profile Picture">
+        <h1 id="intro-text">Develop success from failures. Discouragement and failure are two of the surest stepping stones to success</h1>
+        <div class="intro intro-background">
+            <p> Hello! I’m KMR Preethi As an aspiring technologist with a passion for AI, data science, and web development, I am excited to showcase my portfolio. Dive in to explore my projects, skills, and more!</p>
+        </div>
+        <div class="theme-switch-container">
+            <a href="preethi resume.pdf" class="download-button" download>Download Resume</a>
+            <p>Light/Dark Mode</p>
+            <label class="theme-slider">
+                <input type="checkbox" id="theme-toggle">
+                <span class="round"></span>
+            </label>
+        </div>
+    </header>
+
+    <section class="skills">
+        <h2>My Skills</h2>
+        <div class="skills-list">
+            <div class="skill">
+                <img src="java.jpeg" alt="Java">
+                <p>Java</p>
+            </div>
+            <div class="skill">
+                <img src="c++.png" alt="C++">
+                <p>C++</p>
+            </div>
+            <div class="skill">
+                <img src="python.jpeg" alt="Python">
+                <p>Python</p>
+            </div>
+            <div class="skill">
+                <img src="javascript.png" alt="JavaScript">
+                <p>JavaScript</p>
+            </div>
+            <div class="skill">
+                <img src="php.jpeg" alt="PHP">
+                <p>PHP</p>
+            </div>
+            <div class="skill">
+                <img src="r.jpeg" alt="R">
+                <p>R</p>
+            </div>
+            <div class="skill">
+                <img src="sql.png" alt="SQL">
+                <p>SQL</p>
+            </div>
+            <div class="skill">
+                <img src="autogen.png" alt="Autogen">
+                <p>Autogen</p>
+            </div>
+            <div class="skill">
+                <img src="react.jpeg" alt="React">
+                <p>React</p>
+            </div>
+            <div class="skill">
+                <img src="angualr.png" alt="Angular">
+                <p>Angular</p>
+            </div>
+            <div class="skill">
+                <img src="django.png" alt="Django">
+                <p>Django</p>
+            </div>
+            <div class="skill">
+                <img src="flutter.png" alt="Flutter">
+                <p>Flutter</p>
+            </div>
+
+            <div class="skill">
+                <img src="visual studio.jpeg" alt="Visual Studio Code">
+                <p>Visual Studio Code</p>
+            </div>
+            <div class="skill">
+                <img src="idea.jpeg" alt="IntelliJ IDEA">
+                <p>IntelliJ IDEA</p>
+            </div>
+            <div class="skill">
+                <img src="collab.png" alt="Google Colab">
+                <p>Google Colab</p>
+            </div>
+            <div class="skill">
+                <img src="jupyter.png" alt="Jupyter Notebook">
+                <p>Jupyter Notebook</p>
+            </div>
+            <div class="skill">
+                <img src="keras.png" alt="Keras">
+                <p>Keras</p>
+            </div>
+            <div class="skill">
+                <img src="tensorflow.png" alt="TensorFlow">
+                <p>TensorFlow</p>
+            </div>
+            <div class="skill">
+                <img src="pycharm.jpeg" alt="PyCharm">
+                <p>PyCharm</p>
+            </div>
+            <div class="skill">
+                <img src="azure.jpeg" alt="Microsoft Azure">
+                <p>Microsoft Azure</p>
+            </div>
+            <div class="skill">
+                <img src="google cloud.png" alt="Google Cloud Platforms">
+                <p>Google Cloud Platforms</p>
+            </div>
+            <div class="skill">
+                <img src="tableau.png" alt="Tableau">
+                <p>Tableau</p>
+            </div>
+            <div class="skill">
+                <img src="powerbi.jpeg" alt="PowerBI">
+                <p>PowerBI</p>
+            </div>
+            <div class="skill">
+                <img src="excel.png" alt="MS Excel">
+                <p>MS Excel</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects">
+        <h2>Projects</h2>
+        <div class="projects-list">
+            <div class="project">
+                <img src="twitter-sentiment.png" alt="Live Twitter Sentiment Analysis">
+                <div class="project-content">
+                    <h3>Live Twitter Sentiment Analysis</h3>
+                    <p>An automated system to analyze and visualize live Twitter sentiment data.</p>
+                  
+                </div>
+            </div>
+            <div class="project">
+                <img src="/data-leakage.png" alt="Data Leakage Detection">
+                <div class="project-content">
+                    <h3>Data Leakage Detection</h3>
+                    <p>Developed a system to detect and prevent data leakage using advanced algorithms.</p>
+                    
+                </div>
+            </div>
+            <div class="project">
+                <img src="Detection of Diabetic Retinopathy Using GAN.jpeg" alt="Diabetic Retinopathy Using GAN">
+                <div class="project-content">
+                    <h3>Diabetic Retinopathy Detection Using GAN</h3>
+                    <p>Used Generative Adversarial Networks (GANs) for accurate diabetic retinopathy detection.</p>
+             
+                </div>
+            </div>
+            <div class="project">
+                <img src="An Automated Retrieval System for Relevant Information and Images Using Embeddings and GPT.jpeg" alt="Automated Retrieval System">
+                <div class="project-content">
+                    <h3>Automated Retrieval System</h3>
+                    <p>Implemented an automated system for retrieving relevant information and images using embeddings and GPT.</p>
+                  
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact">
+        <h2>Contact Details</h2>
+        <div class="contact-item">
+            <label for="email">Email:</label>
+            <p id="email"><a href="mailto:preethir2002@gmail.com">preethir2002@gmail.com.com</a></p>
+        </div>
+        <div class="contact-item">
+            <label for="phone">Phone:</label>
+            <p id="phone"><a href="tel:+917021097950">7021097950</a></p>
+        </div>
+        <div class="contact-item">
+            <label for="github">GitHub:</label>
+            <p id="github"><a href="https://github.com/preethir2002" target="_blank">https://github.com/preethir2002</a></p>
+        </div>
+        <div class="contact-item">
+            <label for="linkedin">Linkedin:</label>
+            <p id="linkedin"><a href="https://www.linkedin.com/in/preethi-kmr-830a73217/" target="_blank">https://www.linkedin.com/in/preethi-kmr-830a73217/</a></p>
+        </div>
+    </section>
+    <footer>
+        <p>© 2024 Preethi. All rights reserved.</p>
+        
+
+    </footer>
+
+    <script>
+        document.getElementById('theme-toggle').addEventListener('change', function () {
+            document.body.classList.toggle('dark-mode', this.checked);
+        });
+    </script>
+</body>
+
+</html>
